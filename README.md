@@ -2,6 +2,118 @@
 
 # Apache Kafka — Notes & Hands-on
 
+**clean, full Kafka architecture diagram**
+## Kafka Architecture Overview
+                    ┌───────────────────────┐
+                    │       Producer        │
+                    │  (sends messages)    │
+                    └──────────┬────────────┘
+                               │
+                               ▼
+                ┌───────────────────────────────┐
+                │        Kafka Cluster          │
+                │ (multiple brokers/servers)    │
+                │                               │
+                │   ┌───────────────┐           │
+                │   │   Broker 1    │           │
+                │   │  P0 (Leader)  │◄──┐       │
+                │   │  P1 (Follower)│   │       │
+                │   └───────────────┘   │       │
+                │                       │       │
+                │   ┌───────────────┐   │ Replication
+                │   │   Broker 2    │   │       │
+                │   │  P1 (Leader)  │───┼───────┘
+                │   │  P2 (Follower)│   │       |
+                │   └───────────────┘   │       |
+                │                       │       |
+                │   ┌───────────────┐   │       |
+                │   │   Broker 3    │   │       |
+                │   │  P2 (Leader)  │◄──┘       |
+                │   │  P0 (Follower)│           |
+                │   └───────────────┘           |
+                │                               |
+                │   Topic: orders               |
+                │   Partitions: P0, P1, P2      |
+                └──────────┬────────────────────┘
+                           │
+                           ▼
+            ┌────────────────────────────────────┐
+            │         Consumer Group A           │
+            │       (order-service)              │
+            │                                    │
+            │   Consumer 1 → Partition P0        │
+            │   Consumer 2 → Partition P1        │
+            │   Consumer 3 → Partition P2        │
+            │                                    │
+            │   Offsets:                         │
+            │   P0 → 5                           │
+            │   P1 → 3                           │
+            │   P2 → 7                           │
+            └────────────────────────────────────┘
+                           │
+                           ▼
+            ┌────────────────────────────────────┐
+            │         Consumer Group B           │
+            │      (payment-service)             │
+            │                                    │
+            │   Consumer 1 → Partition P0        │
+            │   Consumer 2 → Partition P1        │
+            │   Consumer 3 → Partition P2        │
+            │                                    │
+            │   Offsets:                         │
+            │   P0 → 2                           │
+            │   P1 → 1                           │
+            │   P2 → 4                           │
+            └────────────────────────────────────┘
+
+### Producer
+* Sends messages to a topic
+
+
+### Kafka Cluster
+* Made of multiple **brokers (servers)**
+* Stores data in **topics → partitions**
+
+### Partitions
+* Each partition has:
+
+  * **Leader (handles reads/writes)**
+  * **Followers (replication)**
+
+### Replication
+
+* Data is copied across brokers
+* Ensures **fault tolerance**
+
+### Consumer Groups
+
+* Each group = one service
+* Each group reads data independently
+
+### Consumers
+
+* Inside a group:
+1 partition → 1 consumer
+
+
+### Offsets
+
+* Track how much each group has consumed
+Offset = progress of a consumer group per partition
+
+## Model
+Producer → Topic → Partitions → Brokers
+                         ↓
+                 Consumer Groups
+                         ↓
+                     Offsets
+
+## One-line summary
+Kafka = distributed system where producers send data to partitions across brokers, and consumer groups read it independently using offsets.
+
+
+
+
 ## What is Kafka?
 
 Apache Kafka is a **open-source, distributed, event streaming platform** used to build real-time data pipelines and streaming applications.
