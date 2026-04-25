@@ -534,3 +534,54 @@ Offset → Progress tracker
 * Always use key if ordering matters
 * Handle duplicate messages
 * Do NOT mix different services in same group
+
+
+## Choosing Topics in Kafka
+
+In Apache Kafka, a **topic represents a stream of related events**.
+You should design topics based on **event type or domain**, not by combining everything into one topic or creating one topic per service.
+
+A good rule:
+
+1 topic = 1 type of event stream
+
+## Real-world Example: E-Commerce System
+
+You should separate them based on their purpose:
+✔ orders-events
+✔ payments-events
+✔ shipping-events
+✔ notifications-events
+
+This allows different services to consume only the data they need. For instance:
+* Order service listens to `orders-events`
+* Payment service listens to `payments-events`
+* Notification service can listen to multiple topics
+
+
+## Real-world Example: Ride / Cab System
+
+driver-location-updates
+ride-requests
+ride-status-events
+payment-events
+
+* `driver-location-updates` → high-frequency real-time data
+* `payment-events` → critical financial data
+* `ride-status-events` → business workflow (started, completed, etc.)
+
+Separating topics ensures better scalability, performance, and clarity.
+
+## Key Takeaways
+
+* Topics should represent **types of data**, not services
+* Different services can consume the same topic using different consumer groups
+* High-volume or critical data should have separate topics
+* Avoid one big topic for everything and avoid too many tiny topics
+
+## Summary
+
+Topic = event stream (data)
+Consumer group = service (who consumes it)
+
+A well-designed topic structure makes your Kafka system **scalable, maintainable, and easy to extend**
