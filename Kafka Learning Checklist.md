@@ -14,6 +14,7 @@ Used Docker
     -e KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 ^
     -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 ^
     -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER ^
+    -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 ^
     apache/kafka:latest
 
 # Line-by-line explanation
@@ -77,7 +78,13 @@ Without this:
 -e KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
 Use CONTROLLER port (9093) for cluster coordination
 
-## 8. Image
+## 8. Replication factor
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    Kafka internally stores consumer offsets
+    Default expects 3 brokers
+    We only have 1 broker → so set it to 1
+
+## 9. Image
 apache/kafka:latest
 
 # Final simple mental model
@@ -118,6 +125,7 @@ Stop the container
     CREATE PRODUCER : /opt/kafka/bin/kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
     CREATE CONSUMER : /opt/kafka/bin/kafka-console-consumer.sh --topic test-topic --from-beginning --bootstrap-server localhost:9092
 
+![Message produced and consumed](image.png)
 
 5. List topics
 6. Describe a topic
