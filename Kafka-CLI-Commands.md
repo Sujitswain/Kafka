@@ -110,10 +110,3 @@ Example:
 ```bash
 /opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe --group group-A
 ```
-
-## Notes
-- Replace `<topic-name>`, `<num-partitions>`, `<replication-factor>`, `<group-name>` with actual values
-- All commands use `localhost:9092` as the bootstrap server (adjust for your setup)
-- For KRaft mode (no ZooKeeper), ensure your Kafka setup supports it
-- Commands are run from the Kafka installation directory or with full paths</content>
-<parameter name="filePath">d:\GITHUB\Kafka\Kafka\Kafka-CLI-Commands.md
