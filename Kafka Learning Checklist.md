@@ -124,19 +124,19 @@ Stop the container
     CREATE PRODUCER : /opt/kafka/bin/kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
     CREATE CONSUMER : /opt/kafka/bin/kafka-console-consumer.sh --topic test-topic --from-beginning --bootstrap-server localhost:9092
 
-![Message produced and consumed](image.png)
+![Message produced and consumed](images/image.png)
 
 4. Create a topic
     CREATE TOPIC    : /opt/kafka/bin/kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
-    ![alt text](image-3.png)
+    ![alt text](images/image-3.png)
 
 5. List topics
     LIST TOPIC      : /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server localhost:9092
-    ![alt text](image-2.png)
+    ![alt text](images/image-2.png)
 
 6. Describe a topic
     DESCRIBE OFFSET : /opt/kafka/bin/kafka-topics.sh --describe --topic test-topic --bootstrap-server localhost:9092
-    ![alt text](image-1.png)
+    ![alt text](images/image-1.png)
 
 7. Produce messages (CLI producer)
     /opt/kafka/bin/kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
@@ -159,7 +159,7 @@ Stop the container
 11. Understand ordering within partitions
     /opt/kafka/bin/kafka-console-consumer.sh --topic multi-part-topic --bootstrap-server localhost:9092 --from-beginning --property print.value=true --property print.partition=true --property print.offset=true
 
-    ![alt text](image-4.png)
+    ![alt text](images/image-4.png)
 
 ## Phase 4: Consumer Groups
 
@@ -195,7 +195,7 @@ Stop the container
 
         A Kafka partition is assigned to only one consumer per consumer group, but multiple consumer groups can independently consume the same topic.
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 ## Phase 5: Offsets & Commit
 
@@ -209,19 +209,19 @@ CREATE PRODUCER:
 
 CREATE CONSUMER:
     /opt/kafka/bin/kafka-console-consumer.sh --topic cg-topic --bootstrap-server localhost:9092 --group group-A --from-beginning
-    ![alt text](image-6.png)
+    ![alt text](images/image-6.png)
 
 17. Restart and observe offset behavior
 
 STOP CONSUMER:
-    ![alt text](image-7.png)
+    ![alt text](images/image-7.png)
 
 ADD SOME EXTRA MSG IN PRODUCER AFTER STOPPING CONSUMER
-    ![alt text](image-9.png)
+    ![alt text](images/image-9.png)
 
 RESTART THE CONSUMER WITH SAME GROUP-ID
     /opt/kafka/bin/kafka-console-consumer.sh --topic cg-topic --bootstrap-server localhost:9092 --group group-A
-    ![alt text](image-10.png)
+    ![alt text](images/image-10.png)
 
 Offset = “last read position”
 Kafka stores it in: __consumer_offsets (internal topic)
@@ -242,7 +242,7 @@ Case 2: latest
 | New group + from-beginning | earliest     |
 | Existing group             | ignores both |
 
-![alt text](image-11.png)
+![alt text](images/image-11.png)
 
 * auto commit vs manual commit
 
@@ -271,7 +271,7 @@ Stop consumer
 Restart again
 
 You will see:
-    ![alt text](image-12.png)
+    ![alt text](images/image-12.png)
     ALL messages again
 
 ## Phase 6: Keys & Partitioning
@@ -296,7 +296,7 @@ You will see:
 
         /opt/kafka/bin/kafka-console-consumer.sh --topic key-topic --bootstrap-server localhost:9092 --from-beginning --property print.value=true --property print.partition=true
         
-    ![alt text](image-13.png)
+    ![alt text](images/image-13.png)
 
     WITH KEY:
         same key → same partition → ordered
@@ -305,7 +305,7 @@ You will see:
 
         /opt/kafka/bin/kafka-console-consumer.sh --topic key-topic --bootstrap-server localhost:9092 --from-beginning --property print.value=true --property print.partition=true
     
-    ![alt text](image-14.png)
+    ![alt text](images/image-14.png)
 
 ## Phase 7: Rebalance
 
@@ -434,10 +434,10 @@ CREATE CONSUMER
     /opt/kafka/bin/kafka-console-consumer.sh --topic rebalance-topic --bootstrap-server localhost:9092 --group group-R --from-beginning --formatter-property print.partition=true
 
 ONE CONSUMER
-![alt text](image-15.png)
+![alt text](images/image-15.png)
 
 TWO CONMSUMER (Partitions are distributed among consumer)
-![alt text](image-16.png)
+![alt text](images/image-16.png)
 
 # Summary
  Rebalance is Kafka redistributing partitions among consumers when group membership changes.
@@ -450,7 +450,7 @@ TWO CONMSUMER (Partitions are distributed among consumer)
 27. Understand leader & follower
 28. Learn fault tolerance behavior
 
-![alt text](image-17.png)
+![alt text](images/image-17.png)
 
 ## Phase 9: Basic Configs (Light Learning)
 
