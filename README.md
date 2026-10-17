@@ -66,6 +66,8 @@
             │   P2 → 4                           │
             └────────────────────────────────────┘
 
+![img.png](img.png)
+
 ### Producer
 * Sends messages to a topic
 
@@ -153,6 +155,9 @@ Cluster = Broker1 + Broker2 + Broker3 + ...
 
 ✔ Data is distributed across them
 ✔ Provides scalability + fault tolerance
+
+Kafka Part-1 - (listeners)
+![img_1.png](img_1.png)
 
 # Simple Picture
 
